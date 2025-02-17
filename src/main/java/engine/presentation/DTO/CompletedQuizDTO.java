@@ -1,12 +1,12 @@
-package engine.persistence;
+package engine.presentation.DTO;
 
 import java.time.LocalDateTime;
 
-public class CompletedQuizView {
+public class CompletedQuizDTO {
     private Long id;
     private LocalDateTime completedAt;
 
-    public CompletedQuizView(Long id, LocalDateTime completedAt) {
+    public CompletedQuizDTO(Long id, LocalDateTime completedAt) {
         this.id = id;
         this.completedAt = completedAt;
     }

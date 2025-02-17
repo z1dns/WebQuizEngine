@@ -1,5 +1,6 @@
 package engine.businesslayer;
 
+import engine.businesslayer.security.AppUser;
 import jakarta.persistence.*;
 
 import java.util.List;

@@ -1,8 +1,8 @@
-package engine.businesslayer;
+package engine.businesslayer.security;
 
 import engine.businesslayer.exceptions.RegistrationUserException;
-import engine.persistence.AppUserRepository;
-import engine.presentation.RegistrationRequest;
+import engine.repositories.AppUserRepository;
+import engine.presentation.request.RegistrationRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

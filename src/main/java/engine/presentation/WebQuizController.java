@@ -1,11 +1,16 @@
 package engine.presentation;
 
 import engine.businesslayer.exceptions.ForbiddenActionException;
-import engine.businesslayer.RegistrationService;
+import engine.businesslayer.security.RegistrationService;
 import engine.businesslayer.exceptions.QuizNotFoundException;
 import engine.businesslayer.WebQuizService;
-import engine.persistence.CompletedQuizView;
-import engine.persistence.QuestionView;
+import engine.presentation.DTO.CompletedQuizDTO;
+import engine.presentation.DTO.PageableQuestionDTO;
+import engine.presentation.DTO.AnswerDTO;
+import engine.presentation.DTO.QuestionDTO;
+import engine.presentation.request.AnswerRequest;
+import engine.presentation.request.QuestionRequest;
+import engine.presentation.request.RegistrationRequest;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,8 +40,8 @@ public class WebQuizController {
     }
 
     @PostMapping("/api/quizzes")
-    public QuestionResponse addQuiz(@AuthenticationPrincipal UserDetails user,
-                                    @Valid @RequestBody QuestionRequest questionRequest) {
+    public QuestionDTO addQuiz(@AuthenticationPrincipal UserDetails user,
+                               @Valid @RequestBody QuestionRequest questionRequest) {
         return webQuizService.addNewQuiz(user, questionRequest);
     }
 
@@ -49,19 +54,19 @@ public class WebQuizController {
     }
 
     @GetMapping("/api/quizzes/{id}")
-    public QuestionResponse getQuiz(@PathVariable("id") long id) {
+    public QuestionDTO getQuiz(@PathVariable("id") long id) {
         return webQuizService.getQuizById(id)
                 .orElseThrow(() -> new QuizNotFoundException("Not found quiz, quiz_id:" + id));
     }
 
     @GetMapping("/api/quizzes")
-    public Page<QuestionView> getQuizzes(@RequestParam(name = "page") Integer page) {
+    public Page<PageableQuestionDTO> getQuizzes(@RequestParam(name = "page") Integer page) {
         return webQuizService.getQuizzesByPage(page);
     }
 
     @GetMapping("/api/quizzes/completed")
-    public Page<CompletedQuizView> getCompletedQuizzes(@AuthenticationPrincipal UserDetails user,
-                                                       @RequestParam(name = "page") Integer page) {
+    public Page<CompletedQuizDTO> getCompletedQuizzes(@AuthenticationPrincipal UserDetails user,
+                                                      @RequestParam(name = "page") Integer page) {
         return webQuizService.getCompletedQuizzes(user, page);
     }
 

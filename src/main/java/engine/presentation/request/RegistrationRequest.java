@@ -1,4 +1,4 @@
-package engine.presentation;
+package engine.presentation.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;

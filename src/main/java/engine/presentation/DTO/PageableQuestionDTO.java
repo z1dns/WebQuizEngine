@@ -1,8 +1,8 @@
-package engine.persistence;
+package engine.presentation.DTO;
 
 import java.util.List;
 
-public interface QuestionView {
+public interface PageableQuestionDTO {
     Long getId();
     String getTitle();
     String getText();

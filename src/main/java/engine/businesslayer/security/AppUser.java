@@ -1,4 +1,4 @@
-package engine.businesslayer;
+package engine.businesslayer.security;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

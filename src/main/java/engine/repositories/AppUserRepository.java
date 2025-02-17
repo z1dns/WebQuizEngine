@@ -1,6 +1,6 @@
-package engine.persistence;
+package engine.repositories;
 
-import engine.businesslayer.AppUser;
+import engine.businesslayer.security.AppUser;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;

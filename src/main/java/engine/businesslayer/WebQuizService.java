@@ -2,11 +2,15 @@ package engine.businesslayer;
 
 import engine.businesslayer.exceptions.ForbiddenActionException;
 import engine.businesslayer.exceptions.QuizNotFoundException;
-import engine.persistence.*;
-import engine.presentation.AnswerDTO;
-import engine.presentation.AnswerRequest;
-import engine.presentation.QuestionRequest;
-import engine.presentation.QuestionResponse;
+import engine.businesslayer.mappers.QuestionMapper;
+import engine.businesslayer.security.AppUser;
+import engine.presentation.DTO.CompletedQuizDTO;
+import engine.presentation.DTO.PageableQuestionDTO;
+import engine.repositories.*;
+import engine.presentation.DTO.AnswerDTO;
+import engine.presentation.request.AnswerRequest;
+import engine.presentation.request.QuestionRequest;
+import engine.presentation.DTO.QuestionDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -41,7 +45,7 @@ public class WebQuizService {
         this.completedQuizRepository = completedQuizRepository;
     }
 
-    public QuestionResponse addNewQuiz(UserDetails user, QuestionRequest questionRequest) {
+    public QuestionDTO addNewQuiz(UserDetails user, QuestionRequest questionRequest) {
         LOGGER.info("New questionRequest {} for user {}", questionRequest, user);
         Optional<AppUser> optionalUser = appUserRepository.findAppUserByUsername(user.getUsername());
         AppUser appUser = optionalUser.orElseThrow(() -> new RuntimeException("Unknown user " + user));
@@ -56,24 +60,24 @@ public class WebQuizService {
         return questionMapper.convertQuestionToResponse(question);
     }
 
-    public Optional<QuestionResponse> getQuizById(Long id) {
+    public Optional<QuestionDTO> getQuizById(Long id) {
         Optional<Question> question = questionRepository.findById(id);
         LOGGER.info("Get question{} by id{}", question, id);
         return question.map(questionMapper::convertQuestionToResponse);
     }
 
-    public List<QuestionResponse> getAllQuizzes() {
+    public List<QuestionDTO> getAllQuizzes() {
         LOGGER.info("All quizzes requested");
         return StreamSupport.stream(questionRepository.findAll().spliterator(), false)
                 .map(questionMapper::convertQuestionToResponse)
                 .toList();
     }
 
-    public Page<QuestionView> getQuizzesByPage(Integer page) {
+    public Page<PageableQuestionDTO> getQuizzesByPage(Integer page) {
         return questionRepository.findAllBy(PageRequest.of(page, 10));
     }
 
-    public Page<CompletedQuizView> getCompletedQuizzes(UserDetails user, Integer page) {
+    public Page<CompletedQuizDTO> getCompletedQuizzes(UserDetails user, Integer page) {
         Optional<AppUser> appUser = appUserRepository.findAppUserByUsername(user.getUsername());
         Long userId = appUser.isPresent() ? appUser.get().getId() : 0L;
         return completedQuizRepository.findAllByUserId(userId, PageRequest.of(page, 10));

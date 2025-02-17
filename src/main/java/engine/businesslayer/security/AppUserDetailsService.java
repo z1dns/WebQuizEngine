@@ -1,6 +1,6 @@
-package engine.businesslayer;
+package engine.businesslayer.security;
 
-import engine.persistence.AppUserRepository;
+import engine.repositories.AppUserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
