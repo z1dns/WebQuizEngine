@@ -70,11 +70,6 @@ public class WebQuizController {
         return webQuizService.getCompletedQuizzes(user, page);
     }
 
-    //@GetMapping("/api/quizzes")
-    //public List<QuestionResponse> getQuizzes() {
-    //    return webQuizService.getAllQuizzes();
-    //}
-
     @DeleteMapping("/api/quizzes/{id}")
     public ResponseEntity deleteQuiz(@AuthenticationPrincipal UserDetails user,
                                      @PathVariable("id") long id) {
